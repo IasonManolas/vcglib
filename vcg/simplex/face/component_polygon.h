@@ -24,6 +24,10 @@
 #ifndef __VCG_POLYGON_COMPONENT
 #define __VCG_POLYGON_COMPONENT
 
+#include <cassert>
+#include <vector>
+#include <string>
+
 namespace vcg {
 namespace face {
 
@@ -60,30 +64,30 @@ public:
   typedef typename  T::VertexType::ScalarType ScalarType;
   typedef typename  T::VertexType VertexType;
 
-  PFVAdj(){ _vpoly = NULL; }
+  PFVAdj(){ _vpoly = nullptr; }
   /* Note: the destructor will not be called in general because there are no virtual destructors.
    * Instead, the job of deallocating the memory will be done by the face allocator.
    * This destructor is only done for those who istance a face alone (outside a mesh)
    */
 //  ~PFVAdj(){ __Dealloc(); }
 
-  inline typename T::VertexType *       & V( const int j )       { assert(j>=0 && j<this->VN()); return _vpoly[j]; }
-  inline typename T::VertexType * const & V( const int j ) const { assert(j>=0 && j<this->VN()); return _vpoly[j]; }
-  inline typename T::VertexType *        cV( const int j ) const { assert(j>=0 && j<this->VN()); return _vpoly[j]; }
+  inline typename T::VertexType * &  V( const int j )       { assert(j>=0 && j<this->VN()); return _vpoly[j]; }
+  inline typename T::VertexType *    V( const int j ) const { assert(j>=0 && j<this->VN()); return _vpoly[j]; }
+  inline typename T::VertexType *   cV( const int j ) const { assert(j>=0 && j<this->VN()); return _vpoly[j]; }
 
 
   /** Return the pointer to the ((j+1)%3)-th vertex of the face.
         @param j Index of the face vertex.
      */
-  inline        VertexType *       &  V0( const int j )       { return V(j);}
-  inline        VertexType *       &  V1( const int j )       { return V((j+1)%this->VN());}
-  inline        VertexType *       &  V2( const int j )       { return V((j+2)%this->VN());}
-  inline const  VertexType * const &  V0( const int j ) const { return V(j);}
-  inline const  VertexType * const &  V1( const int j ) const { return V((j+1)%this->VN());}
-  inline const  VertexType * const &  V2( const int j ) const { return V((j+2)%this->VN());}
-  inline const  VertexType * const & cV0( const int j ) const { return cV(j);}
-  inline const  VertexType * const & cV1( const int j ) const { return cV((j+1)%this->VN());}
-  inline const  VertexType * const & cV2( const int j ) const { return cV((j+2)%this->VN());}
+  inline        VertexType * &  V0( const int j )       { return V(j);}
+  inline        VertexType * &  V1( const int j )       { return V((j+1)%this->VN());}
+  inline        VertexType * &  V2( const int j )       { return V((j+2)%this->VN());}
+  inline const  VertexType *    V0( const int j ) const { return V(j);}
+  inline const  VertexType *    V1( const int j ) const { return V((j+1)%this->VN());}
+  inline const  VertexType *    V2( const int j ) const { return V((j+2)%this->VN());}
+  inline const  VertexType *   cV0( const int j ) const { return cV(j);}
+  inline const  VertexType *   cV1( const int j ) const { return cV((j+1)%this->VN());}
+  inline const  VertexType *   cV2( const int j ) const { return cV((j+2)%this->VN());}
 
   inline        CoordType &P( const int j )       {	assert(j>=0 && j<this->VN());		return _vpoly[j]->P();	}
   inline        CoordType cP( const int j ) const {	assert(j>=0 && j<this->VN());		return _vpoly[j]->cP(); }
