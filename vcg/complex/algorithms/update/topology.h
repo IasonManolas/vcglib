@@ -295,9 +295,10 @@ static void AllocateEdge(MeshType &m)
       std::vector<FacePointer> fpVec;
       std::vector<int> eiVec;
       face::EFStarFF(Edges[i].f,Edges[i].z,fpVec,eiVec);
-      for(size_t j=0;j<fpVec.size();++j)
-        fpVec[j]->FEp(eiVec[j])=&(m.edge[i]);
-
+      for (size_t j = 0; j < fpVec.size(); ++j) {
+          fpVec[j]->FEp(eiVec[j]) = &(m.edge[i]);
+          assert(vcg::tri::IsValidPointer(m, fpVec[j]->cFEp(eiVec[j])));
+      }
 //      Edges[i].f->FE(Edges[i].z) = &(m.edge[i]);
 //      Connect in loop the non manifold
 //      FaceType* fpit=fp;
